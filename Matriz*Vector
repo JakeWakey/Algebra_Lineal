@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    // Solicitar las dimensiones de la matriz
+    int filas, columnas;
+    cout << "Introduce el número de filas de la matriz: ";
+    cin >> filas;
+    cout << "Introduce el número de columnas de la matriz: ";
+    cin >> columnas;
+
+    // Solicitar los elementos de la matriz
+    vector<vector<int>> matriz(filas, vector<int>(columnas));
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+        	cout << "Introduce los elementos de la matriz:["<< i << ", " << j << "]: ";
+            cin >> matriz[i][j];
+        }
+    }
+
+  	cout << "Introduce el número de columnas del vector: ";
+  	cin >> k;
+
+    // Solicitar los elementos del vector
+    vector<int> vectorEntrada(columnas);
+    for (int k = 0; j < columnas; ++j) {
+    	cout << "Introduce los elementos del vector:[" << j << "]: ";
+        cin >> vectorEntrada[j];
+    }
+
+    // Verificar si las dimensiones son compatibles para la multiplicación
+    if (matriz[0].size() != vectorEntrada.size()) {
+        cout << "No se puede realizar la multiplicación debido a dimensiones incompatibles." << endl;
+        return 1;
+    }
+
+    // Realizar la multiplicación
+    vector<int> resultado(filas, 0);
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            resultado[i] += matriz[i][j] * vectorEntrada[j];
+        }
+    }
+
+    // Imprimir el resultado
+    cout << "Resultado de la multiplicación:" << endl;
+    for (int num : resultado) {
+        cout << num << " "<<endl;
+    }
+    cout << endl;
+
+    return 0;
+}
