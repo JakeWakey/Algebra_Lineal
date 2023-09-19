@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int filas1, columnas1, filas2, columnas2;
+
+    // Solicita las dimensiones de la primera matriz
+    cout << "Ingrese el número de filas de la primera matriz: ";
+    cin >> filas1;
+    cout << "Ingrese el número de columnas de la primera matriz: ";
+    cin >> columnas1;
+
+    // Solicita las dimensiones de la segunda matriz
+    cout << "Ingrese el número de filas de la segunda matriz: ";
+    cin >> filas2;
+    cout << "Ingrese el número de columnas de la segunda matriz: ";
+    cin >> columnas2;
+
+    // Verifica si las matrices se pueden multiplicar
+    if (columnas1 != filas2) {
+        cout << "No se pueden multiplicar las matrices. El número de columnas de la primera matriz debe ser igual al número de filas de la segunda matriz." << endl;
+        return 1;
+    }
+
+    // Declarar las matrices
+    int matriz1[filas1][columnas1];
+    int matriz2[filas2][columnas2];
+    int resultado[filas1][columnas2];
+
+    // Solicitar elementos de la primera matriz
+    cout << "Ingrese los elementos de la primera matriz:" << endl;
+    for (int i = 0; i < filas1; i++) {
+        for (int j = 0; j < columnas1; j++) {
+            cin >> matriz1[i][j];
+        }
+    }
+
+    // Solicitar elementos de la segunda matriz
+    cout << "Ingrese los elementos de la segunda matriz:" << endl;
+    for (int i = 0; i < filas2; i++) {
+        for (int j = 0; j < columnas2; j++) {
+            cin >> matriz2[i][j];
+        }
+    }
+
+    // Inicializar la matriz resultado
+    for (int i = 0; i < filas1; i++) {
+        for (int j = 0; j < columnas2; j++) {
+            resultado[i][j] = 0;
+        }
+    }
+
+    // Realizar la multiplicación de matrices
+    for (int i = 0; i < filas1; i++) {
+        for (int j = 0; j < columnas2; j++) {
+            for (int k = 0; k < columnas1; k++) {
+                resultado[i][j] += matriz1[i][k] * matriz2[k][j];
+            }
+        }
+    }
+
+    // Imprimir la matriz resultado
+    cout << "La matriz resultante es:" << endl;
+    for (int i = 0; i < filas1; i++) {
+        for (int j = 0; j < columnas2; j++) {
+            cout << resultado[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
