@@ -1,0 +1,171 @@
+#include <iostream>
+
+// Función para imprimir una matriz
+void imprimirMatriz(int matriz[][10], int filas, int columnas) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            std::cout << matriz[i][j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+// Función para obtener la matriz traspuesta
+void matrizTraspuesta(int matriz[][10], int filas, int columnas, int traspuesta[][10]) {
+    for (int i = 0; i < filas; ++i) {
+        for (int j = 0; j < columnas; ++j) {
+            traspuesta[j][i] = matriz[i][j];
+        }
+    }
+}
+
+int main() {
+    int opcion;
+    int matriz1[10][10], matriz2[10][10], traspuesta1[10][10], traspuesta2[10][10];
+    int filas1, columnas1, filas2, columnas2;
+
+    std::cout << "Ingrese el número de filas de la primera matriz: ";
+    std::cin >> filas1;
+    std::cout << "Ingrese el número de columnas de la primera matriz: ";
+    std::cin >> columnas1;
+
+    std::cout << "Ingrese el número de filas de la segunda matriz: ";
+    std::cin >> filas2;
+    std::cout << "Ingrese el número de columnas de la segunda matriz: ";
+    std::cin >> columnas2;
+
+    std::cout << "Ingrese los elementos de la primera matriz:" << std::endl;
+    for (int i = 0; i < filas1; ++i) {
+        for (int j = 0; j < columnas1; ++j) {
+            std::cout << "Ingrese el elemento (" << i + 1 << "," << j + 1 << "): ";
+            std::cin >> matriz1[i][j];
+        }
+    }
+
+    std::cout << "Ingrese los elementos de la segunda matriz:" << std::endl;
+    for (int i = 0; i < filas2; ++i) {
+        for (int j = 0; j < columnas2; ++j) {
+            std::cout << "Ingrese el elemento (" << i + 1 << "," << j + 1 << "): ";
+            std::cin >> matriz2[i][j];
+        }
+    }
+
+    std::cout << "Menú:" << std::endl;
+    std::cout << "1. Multiplicar A*B" << std::endl;
+    std::cout << "2. Multiplicar B*A" << std::endl;
+    std::cout << "3. Obtener traspuestas y multiplicar" << std::endl;
+    std::cout << "4. Obtener traspuesta de una matriz y multiplicar" << std::endl;
+    std::cout << "Ingrese su opción: ";
+    std::cin >> opcion;
+
+    switch (opcion) {
+        case 1:
+            // A*B
+            // Asegurarse de que las dimensiones sean adecuadas para la multiplicación
+            if (columnas1 != filas2) {
+                std::cout << "No se pueden multiplicar las matrices. Las columnas de la primera matriz deben coincidir con las filas de la segunda matriz." << std::endl;
+                return 1;
+            }
+
+            // Realizar la multiplicación
+            int productoAB[10][10];
+            for (int i = 0; i < filas1; ++i) {
+                for (int j = 0; j < columnas2; ++j) {
+                    productoAB[i][j] = 0;
+                    for (int k = 0; k < columnas1; ++k) {
+                        productoAB[i][j] += matriz1[i][k] * matriz2[k][j];
+                    }
+                }
+            }
+
+            // Imprimir el producto
+            std::cout << "El producto de A*B es:" << std::endl;
+            imprimirMatriz(productoAB, filas1, columnas2);
+            break;
+
+        case 2:
+            // B*A
+            // Asegurarse de que las dimensiones sean adecuadas para la multiplicación
+            if (columnas2 != filas1) {
+                std::cout << "No se pueden multiplicar las matrices. Las columnas de la segunda matriz deben coincidir con las filas de la primera matriz." << std::endl;
+                return 1;
+            }
+
+            // Realizar la multiplicación
+            int productoBA[10][10];
+            for (int i = 0; i < filas2; ++i) {
+                for (int j = 0; j < columnas1; ++j) {
+                    productoBA[i][j] = 0;
+                    for (int k = 0; k < columnas2; ++k) {
+                        productoBA[i][j] += matriz2[i][k] * matriz1[k][j];
+                    }
+                }
+            }
+
+            // Imprimir el producto
+            std::cout << "El producto de B*A es:" << std::endl;
+            imprimirMatriz(productoBA, filas2, columnas1);
+            break;
+
+        case 3:
+            // Calcular traspuestas
+            matrizTraspuesta(matriz1, filas1, columnas1, traspuesta1);
+            matrizTraspuesta(matriz2, filas2, columnas2, traspuesta2);
+
+            // Multiplicar las matrices traspuestas
+            // Asegurarse de que las dimensiones sean adecuadas para la multiplicación
+            if (columnas1 != filas2) {
+                std::cout << "No se pueden multiplicar las matrices. Las columnas de la primera matriz deben coincidir con las filas de la segunda matriz." << std::endl;
+                return 1;
+            }
+
+            // Realizar la multiplicación
+            int productoTraspuestas[10][10];
+            for (int i = 0; i < filas1; ++i) {
+                for (int j = 0; j < columnas2; ++j) {
+                    productoTraspuestas[i][j] = 0;
+                    for (int k = 0; k < columnas1; ++k) {
+                        productoTraspuestas[i][j] += traspuesta1[i][k] * traspuesta2[j][k];
+                    }
+                }
+            }
+
+            // Imprimir el producto
+            std::cout << "El producto de las matrices traspuestas es:" << std::endl;
+       imprimirMatriz(productoTraspuestas, filas1, columnas2);
+        break;
+
+    case 4:
+        // Calcular la traspuesta de la segunda matriz
+        matrizTraspuesta(matriz2, filas2, columnas2, traspuesta2);
+
+        // Multiplicar la primera matriz por la traspuesta de la segunda matriz
+        // Asegurarse de que las dimensiones sean adecuadas para la multiplicación
+        if (columnas1 != filas2) {
+            std::cout << "No se pueden multiplicar las matrices. Las columnas de la primera matriz deben coincidir con las filas de la segunda matriz." << std::endl;
+            return 1;
+        }
+
+        // Realizar la multiplicación
+        int productoTraspuesta[10][10];
+        for (int i = 0; i < filas1; ++i) {
+            for (int j = 0; j < columnas2; ++j) {
+                productoTraspuesta[i][j] = 0;
+                for (int k = 0; k < columnas1; ++k) {
+                    productoTraspuesta[i][j] += matriz1[i][k] * traspuesta2[j][k];
+                }
+            }
+        }
+
+        // Imprimir el producto
+        std::cout << "El producto de la primera matriz por la traspuesta de la segunda matriz es:" << std::endl;
+        imprimirMatriz(productoTraspuesta, filas1, columnas2);
+        break;
+
+    default:
+        std::cout << "Opción no válida." << std::endl;
+        break;
+}
+
+return 0;
+}
