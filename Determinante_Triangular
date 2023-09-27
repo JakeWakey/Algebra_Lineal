@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void make_upper_triangular(vector<vector<double> >& matrix) {
+    int fils = matrix.size();
+    int cols = matrix[0].size();  // Excluimos la última columna
+
+    // Realiza eliminación gaussiana para convertir en triangular superior
+    for (int i = 0; i < fils - 1; ++i) {
+        for (int k = i + 1; k < fils; ++k) {
+            // Calcula el factor necesario para hacer cero la entrada debajo de la diagonal
+            double factor = -matrix[k][i] / matrix[i][i];
+
+            // Muestra las operaciones para hacer cero la entrada
+            cout << "Operaciones para hacer la fila " << k + 1 << " cero en la columna " << i + 1 << ":" << endl;
+            for (int j = i; j < cols; ++j) {
+                // Calcula y muestra la operación
+                cout << "   Fila " << k + 1 << "[" << j + 1 << "] = Fila " << k + 1 << "[" << j + 1 << "] + ("
+                     << factor << ") * Fila " << i + 1 << "[" << j + 1 << "]" << endl;
+                // Actualiza el valor de la celda en la matriz
+                matrix[k][j] += factor * matrix[i][j];
+            }
+            cout << endl;
+        }
+    }
+}
+
+double multiply_diagonal(const vector<vector<double> >& matrix) {
+    int size = matrix.size();
+    double product = 1.0; // Inicializa el producto en 1.0
+
+    for (int i = 0; i < size; ++i) {
+        product *= matrix[i][i]; // Multiplica el elemento de la diagonal
+    }
+
+    return product;
+}
+
+int main() {
+    int fils, cols;
+    cout << "Ingrese el número de filas: ";
+    cin >> fils;
+    cout << "Ingrese el número de columnas: ";
+    cin >> cols;
+
+    // Crea la matriz aumentada
+    vector<vector<double> > matrix(fils, vector<double>(cols));
+
+    // Ingresa los elementos de la matriz aumentada por fila
+    for (int i = 0; i < fils; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << "Ingrese los elementos de la matriz aumentada por fila: [" << i << ", " << j << "]: ";
+            cin >> matrix[i][j];
+        }
+    }
+
+    // Muestra la matriz aumentada original
+    cout << "Matriz aumentada original:" << endl;
+    for (int i = 0; i < fils; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    // Llama a la función para convertir en triangular superior
+    make_upper_triangular(matrix);
+
+    // Muestra la matriz triangular superior resultante
+    cout << "Matriz aumentada triangular superior resultante:" << endl;
+    for (int i = 0; i < fils; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            cout << matrix[i][j] << "\t";
+        }
+        cout << endl;
+    }
+    
+
+    // Calcula y muestra el producto de la diagonal
+    double diagonal_product = multiply_diagonal(matrix);
+    cout << "Producto de la diagonal (determinandte): " << diagonal_product << endl;
+
+
+    return 0;
+}
